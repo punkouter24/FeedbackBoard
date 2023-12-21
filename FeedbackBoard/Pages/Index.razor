@@ -1,0 +1,41 @@
+﻿@page "/"
+@inject BlobService BlobService
+@code {
+    private List<Message> messages = new List<Message>();
+    private string userMessage = "";
+    private const string ContainerName = "feedbackboardmessages";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await BlobService.CreateContainerIfNotExistsAsync(ContainerName);
+        messages = (await BlobService.GetAllMessagesAsync(ContainerName)).ToList();
+    }
+
+    private async Task SubmitMessage()
+    {
+        var newMessage = new Message
+            {
+                Id = Guid.NewGuid().ToString(),
+                Content = userMessage,
+                DateCreated = DateTime.UtcNow
+            };
+
+        await BlobService.UploadMessageAsync(ContainerName, newMessage);
+        messages.Add(newMessage);
+        userMessage = ""; // Reset the input field
+    }
+}
+<h1>FeedbackBoard</h1>
+
+<textarea @bind="userMessage" maxlength="4000" class="message-input"></textarea>
+<button @onclick="SubmitMessage" class="submit-button">Submit</button>
+
+<div class="message-display">
+    @foreach (var message in messages.OrderByDescending(m => m.DateCreated))
+    {
+        <div class="message">
+            <p>@message.Content</p>
+            <small>@message.DateCreated.ToLocalTime().ToString("G")</small>
+        </div>
+    }
+</div>

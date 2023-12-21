@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "storage1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/FeedbackBoard/providers/Microsoft.ServiceLinker/linkers/DefaultConnection_D80F57697A, /subscriptions/479062d5-f1b2-47ff-b5f6-c5ae7db0954d/resourcegroups/FeedbackBoard/providers/Microsoft.Web/sites/FeedbackBoard/providers/Microsoft.ServiceLinker/linkers/DefaultConnection_BE86E1A331",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/feedbackboard",
+      "type": "storage.azure",
+      "connectionId": "DefaultConnection"
+    }
+  }
+}
